@@ -86,3 +86,98 @@ x = 1:10
 x
 x = seq(-pi, pi, length=50)
 x
+
+# create a contour plot
+y = x
+f = outer(x, y, function(x,y)cos(y)/(1+x^2))
+contour(x, y, f)
+contour(x, y, f, nlevels=45, add=T)
+fa = (f-t(f))/2
+contour(x, y, fa, nlevels=15)
+
+# create a heatmap or 3D plot
+image(x, y, fa)
+persp(x, y, fa)
+persp(x, y, fa, theta=30)
+persp(x, y, fa, theta=30,  phi=20)
+persp(x, y, fa, theta=30,  phi=70)
+persp(x, y, fa, theta=30,  phi=40)
+
+##################
+# 2.3.3 Indexing #
+##################
+# matrix A
+A = matrix(data=1:16, nrow=4, ncol=4)
+A
+
+# access row 2 column 3
+A[2,3]
+
+# grab a sub matrix
+A[c(1,3),c(2,4)]
+A[1:3,2:4]
+A[1:2, ]
+A[ ,1:2]
+A[1, ]
+
+# Use a negative sign to exclude columns or rows
+A[-c(1,3), ]
+A[ ,-c(1,3)]
+
+# get the dimmensions
+dim(A)
+
+######################
+# 2.3.4 Loading Data #
+######################
+# read auto.data
+Auto = read.table(file="../data/ALL CSV FILES/Auto.data")
+fix(Auto)
+
+# read auto.data and set header
+Auto = read.table(file="../data/ALL CSV FILES/Auto.data", header=T, na.strings="?")
+fix(Auto)
+dim(Auto)
+Auto[1:4,]
+
+# remove rows missing data
+Auto = na.omit(Auto)
+dim(Auto)
+
+# check variable names
+names(Auto)
+
+#####################################################
+# 2.3.5 Additional Graphics and Numerical Summaries #
+#####################################################
+# plot the cylinders and mpg
+plot(Auto$cylinders, Auto$mpg)
+attach(Auto)
+plot(cylinders, mpg)
+
+# convert cylinders into qualitative variable
+cylinders=as.factor(cylinders)
+
+# with cylinders as qualitive we should get box plots
+plot(cylinders, mpg)
+plot(cylinders, mpg, col="red")
+plot(cylinders, mpg, col="red", varwidth=T)
+plot(cylinders, mpg, col="red", varwidth=T, horizontal=T)
+plot(cylinders, mpg, col="red", varwidth=T, xlab="Cylinders", ylab="MPG")
+
+# plot a histogram
+hist(mpg)
+hist(mpg, col=2)
+hist(mpg, col=2, breaks=15)
+
+# scatter plot matrix
+pairs(Auto)
+pairs(~ mpg + displacement + horsepower + weight + acceleration, Auto)
+
+# identify values on plot
+plot(horsepower, mpg)
+identify(horsepower, mpg, name)
+
+# provide summary of data
+summary(Auto)
+summary(mpg)
